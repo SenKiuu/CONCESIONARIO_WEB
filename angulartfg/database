@@ -1,0 +1,195 @@
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(100),
+    rol ENUM('admin', 'usuario')
+);
+
+CREATE TABLE coches (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    modelo VARCHAR(100),
+    precio DECIMAL(10,2),
+    imagen VARCHAR(100)
+);
+
+CREATE TABLE compras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    coche_id INT,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (coche_id) REFERENCES coches(id)
+);
+
+-- Insertar admin y usuario
+INSERT INTO usuarios (nombre, email, password, rol) VALUES 
+('Admin', 'suri@gmail.com', 'toor', 'admin'),
+('Usuario', 'suriuser@gmail.com', 'toor', 'usuario');
+
+-- Insertar coches
+INSERT INTO coches (modelo, precio, imagen) VALUES
+('Toyota Supra', 50000, 'supra.jpg'),
+('Ford Mustang', 40000, 'mustang.jpg'),
+('BMW M3', 60000, 'bmw_m3.jpg'),
+('Koenigsegg', 3000000, 'koenigsegg.jpg'),
+('Honda Civic', 25000, 'honda_civic.jpg'),
+('La Ferrari', 1000000, 'la_ferrari.jpg'),
+('Nissan GT-R', 120000, 'nissan_gtr.jpg'),
+('Acura NSX', 150000, 'acura_nsx.jpg'),
+('Pagani Huayra', 2500000, 'pagani_huayra.jpg'),
+('Porsche 911', 130000, 'porsche_911.jpg'),
+('Lamborghini Aventador', 400000, 'lamborghini_aventador.jpg'),
+('Apollo Intensa Emozione', 2500000, 'apollo_intensa_emozione.jpg'), --12
+('Audi R8', 150000, 'audi_r8.jpg'),
+('McLaren 720S', 300000, 'mclaren_720s.jpg'),
+('Chevrolet Corvette', 80000, 'chevrolet_corvette.jpg'),
+('Mercedes-Benz AMG GT', 130000, 'mercedes_amg_gt.jpg'),
+('Lexus LC 500', 100000, 'lexus_lc500.jpg'),
+('Jaguar F-Type', 70000, 'jaguar_ftype.jpg'),
+('Maserati GranTurismo', 160000, 'maserati_granturismo.jpg'),
+('Alfa Romeo Giulia Quadrifoglio', 80000, 'alfa_romeo_giulia.jpg'),
+('Dodge Challenger SRT', 60000, 'dodge_challenger.jpg'),
+('Tesla Model S Plaid', 120000, 'tesla_model_s.jpg'),
+('Aston Martin DB11', 200000, 'aston_martin_db11.jpg'),
+('Bentley Continental GT', 220000, 'bentley_continental.jpg'), --24
+('Rolls-Royce Wraith', 350000, 'rolls_royce_wraith.jpg'),
+('Bugatti Chiron', 3000000, 'bugatti_chiron.jpg'),
+('Ferrari 488 GTB', 250000, 'ferrari_488.jpg'),
+('Lamborghini Huracan', 200000, 'lamborghini_huracan.jpg'),
+('Porsche Taycan', 100000, 'porsche_taycan.jpg'),
+('BMW i8', 150000, 'bmw_i8.jpg'),
+('Audi e-tron GT', 110000, 'audi_etron_gt.jpg'),
+('Ford GT', 500000, 'ford_gt.jpg'),
+('Lotus Evija', 2000000, 'lotus_evija.jpg'),
+('Rimac Nevera', 2000000, 'rimac_nevera.jpg'),
+('Karma Revero', 130000, 'karma_revero.jpg'),
+('Polestar 1', 150000, 'polestar_1.jpg'); --36
+
+CREATE TABLE coche_detalles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    coche_id INT NOT NULL,
+    marca VARCHAR(50),
+    ano INT,
+    kilometros INT,
+    combustible ENUM('Gasolina', 'Diésel', 'Híbrido', 'Eléctrico', 'Hidrógeno'),
+    potencia INT,
+    color VARCHAR(30),
+    descripcion TEXT,
+    FOREIGN KEY (coche_id) REFERENCES coches(id) ON DELETE CASCADE
+);
+-- Detalles para los coches (asociados por coche_id)
+INSERT INTO coche_detalles (coche_id, marca, ano, kilometros, combustible, potencia, color, descripcion) VALUES
+-- Toyota Supra (id: 1)
+(1, 'Toyota', 2020, 15000, 'Gasolina', 340, 'Blanco', 'El Toyota Supra es un deportivo legendario con un motor turbo de 3.0L y tracción trasera.'),
+
+-- Ford Mustang (id: 2)
+(2, 'Ford', 2019, 20000, 'Gasolina', 450, 'Rojo', 'Icono americano con motor V8 y diseño agresivo.'),
+
+-- BMW M3 (id: 3)
+(3, 'BMW', 2021, 10000, 'Gasolina', 510, 'Azul', 'Deportivo alemán con tracción trasera y transmisión manual disponible.'),
+
+-- Koenigsegg (id: 4)
+(4, 'Koenigsegg', 2022, 500, 'Gasolina', 1600, 'Naranja', 'Hypercar sueco con tecnología de vanguardia y rendimiento extremo.'),
+
+-- Honda Civic (id: 5)
+(5, 'Honda', 2021, 25000, 'Gasolina', 180, 'Gris', 'Compacto fiable con excelente eficiencia de combustible.'),
+
+-- La Ferrari (id: 6)
+(6, 'Ferrari', 2015, 3000, 'Híbrido', 950, 'Rojo', 'El superdeportivo híbrido más exclusivo de Ferrari.'),
+
+-- Nissan GT-R (id: 7)
+(7, 'Nissan', 2020, 12000, 'Gasolina', 565, 'Negro', 'Conocido como "Godzilla", ofrece un rendimiento increíble por su precio.'),
+
+-- Acura NSX (id: 8)
+(8, 'Acura', 2019, 8000, 'Híbrido', 573, 'Plata', 'Superdeportivo híbrido con tracción total y motor V6 biturbo.'),
+
+-- Pagani Huayra (id: 9)
+(9, 'Pagani', 2021, 1000, 'Gasolina', 764, 'Dorado', 'Obra de arte sobre ruedas con motor AMG V12.'),
+
+-- Porsche 911 (id: 10)
+(10, 'Porsche', 2022, 5000, 'Gasolina', 443, 'Negro', 'El deportivo por excelencia, equilibrado y con gran manejo.'),
+
+-- Lamborghini Aventador (id: 11)
+(11, 'Lamborghini', 2021, 4000, 'Gasolina', 770, 'Amarillo', 'Superdeportivo con motor V12 y diseño radical.'),
+
+-- Apollo Intensa Emozione (id: 12)
+(12, 'Apollo', 2020, 500, 'Gasolina', 780, 'Verde', 'Hypercar alemán con diseño extremo y aerodinámica activa.'),
+
+-- Audi R8 (id: 13)
+(13, 'Audi', 2021, 7000, 'Gasolina', 562, 'Blanco', 'Superdeportivo con motor V10 y tracción total.'),
+
+-- McLaren 720S (id: 14)
+(14, 'McLaren', 2020, 6000, 'Gasolina', 710, 'Naranja', 'Deportivo británico con tecnología F1 y chasis monocasco.'),
+
+-- Chevrolet Corvette (id: 15)
+(15, 'Chevrolet', 2022, 3000, 'Gasolina', 495, 'Rojo', 'Primer Corvette con motor central y diseño revolucionario.'),
+
+-- Mercedes-Benz AMG GT (id: 16)
+(16, 'Mercedes-Benz', 2021, 8000, 'Gasolina', 523, 'Verde', 'Gran turismo con motor V8 biturbo y sonido espectacular.'),
+
+-- Lexus LC 500 (id: 17)
+(17, 'Lexus', 2020, 10000, 'Gasolina', 471, 'Azul', 'GT de lujo con diseño vanguardista y motor V8.'),
+
+-- Jaguar F-Type (id: 18)
+(18, 'Jaguar', 2019, 15000, 'Gasolina', 575, 'Gris', 'Deportivo británico con líneas elegantes y sonido inigualable.'),
+
+-- Maserati GranTurismo (id: 19)
+(19, 'Maserati', 2018, 20000, 'Gasolina', 454, 'Azul Marino', 'GT italiano con motor V8 y lujo exquisito.'),
+
+-- Alfa Romeo Giulia Quadrifoglio (id: 20)
+(20, 'Alfa Romeo', 2021, 12000, 'Gasolina', 505, 'Rojo', 'Berlina deportiva con motor Ferrari-derived V6 biturbo.'),
+
+-- Dodge Challenger SRT (id: 21)
+(21, 'Dodge', 2020, 18000, 'Gasolina', 717, 'Negro', 'Muscle car americano con motor supercharged HEMI V8.'),
+
+-- Tesla Model S Plaid (id: 22)
+(22, 'Tesla', 2022, 5000, 'Eléctrico', 1020, 'Blanco', 'Sedán eléctrico más rápido del mundo con aceleración increíble.'),
+
+-- Aston Martin DB11 (id: 23)
+(23, 'Aston Martin', 2021, 7000, 'Gasolina', 630, 'Plateado', 'GT británico de lujo con motor V12.'),
+
+-- Bentley Continental GT (id: 24)
+(24, 'Bentley', 2020, 10000, 'Gasolina', 626, 'Negro', 'El epítome del lujo y rendimiento en un gran turismo.'),
+
+-- Rolls-Royce Wraith (id: 25)
+(25, 'Rolls-Royce', 2019, 8000, 'Gasolina', 624, 'Morado', 'El coupé más lujoso del mundo con puertas suicidas.'),
+
+-- Bugatti Chiron (id: 26)
+(26, 'Bugatti', 2021, 1000, 'Gasolina', 1500, 'Azul', 'Hypercar más exclusivo con motor W16 quad-turbo.'),
+
+-- Ferrari 488 GTB (id: 27)
+(27, 'Ferrari', 2018, 5000, 'Gasolina', 661, 'Rojo', 'Superdeportivo con motor V8 biturbo y tecnología F1.'),
+
+-- Lamborghini Huracan (id: 28)
+(28, 'Lamborghini', 2021, 4000, 'Gasolina', 630, 'Verde', 'Deportivo mid-engine con tracción total y sonido V10.'),
+
+-- Porsche Taycan (id: 29)
+(29, 'Porsche', 2022, 3000, 'Eléctrico', 761, 'Gris', 'Deportivo eléctrico con tecnología de carga ultrarrápida.'),
+
+-- BMW i8 (id: 30)
+(30, 'BMW', 2020, 12000, 'Híbrido', 369, 'Azul', 'Deportivo híbrido con puertas de ala de gaviota y diseño futurista.'),
+
+-- Audi e-tron GT (id: 31)
+(31, 'Audi', 2021, 5000, 'Eléctrico', 590, 'Plata', 'Sedán eléctrico con diseño deportivo y tecnología quattro.'),
+
+-- Ford GT (id: 32)
+(32, 'Ford', 2020, 2000, 'Gasolina', 647, 'Blanco', 'Superdeportivo inspirado en las 24 Horas de Le Mans.'),
+
+-- Lotus Evija (id: 33)
+(33, 'Lotus', 2022, 100, 'Eléctrico', 2000, 'Oro', 'Hypercar eléctrico más potente del mundo con diseño radical.'),
+
+-- Rimac Nevera (id: 34)
+(34, 'Rimac', 2022, 200, 'Eléctrico', 1914, 'Negro', 'Hypercar eléctrico croata con aceleración récord.'),
+
+-- Karma Revero (id: 35)
+(35, 'Karma', 2021, 5000, 'Híbrido', 536, 'Plateado', 'GT de lujo híbrido con paneles solares en el techo.'),
+
+-- Polestar 1 (id: 36)
+(36, 'Polestar', 2020, 8000, 'Híbrido', 609, 'Blanco', 'Coupé híbrido de alto rendimiento de la marca premium de Volvo.');
+
+CREATE TABLE incidencias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_email VARCHAR(100),
+    mensaje TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
